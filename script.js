@@ -1,22 +1,20 @@
-var scene = new THREE.Scene();
+let time = document.getElementById('time');
 
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 
-var renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+setInterval(() => {
+  let theTime = moment.tz("2017-11-04 23:00", "America/New_York");
+  let now = moment();
+  let years = now.diff(theTime, 'year');
+  theTime.add(years, 'years');
+  let months = now.diff(theTime, 'months');
+  theTime.add(months, 'months');
+  let days = now.diff(theTime, 'days');
+  theTime.add(days, 'days');
+  let hours = now.diff(theTime, 'hours');
+  theTime.add(hours, 'hours');
+  let minutes = now.diff(theTime, 'minutes');
+  theTime.add(minutes, 'minutes');
+  let seconds = now.diff(theTime, 'seconds');
 
-var geometry = new THREE.BoxGeometry(1, 1, 1);
-var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
-var cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
-
-camera.position.z = 5;
-
-function animate() {
-  requestAnimationFrame(animate);
-  cube.rotation.x = 0.1;
-  cube.rotation.y = 0.1;
-  renderer.render(scene, camera);
-}
-animate();
+  time.innerHTML = `${years} years, ${months} months, ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+}, 1000);
